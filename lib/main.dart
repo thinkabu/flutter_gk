@@ -1,4 +1,3 @@
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +7,6 @@ import 'package:flutter_gk/pages/ProductList.dart';
 import 'package:flutter_gk/wrapper.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   runApp(const MyApp());
@@ -36,14 +34,29 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  String title = "Product List"; // Tiêu đề mặc định
-  var currentPage = DrawerSections.productList; // Product List làm mặc định
+  String title = "Product List";
+  var currentPage = DrawerSections.productList;
 
-  signout()async{
-    await FirebaseAuth.instance.signOut();
+  Future<void> _signOut(BuildContext context) async {
+    try {
+      await FirebaseAuth.instance.signOut();
+      // Điều hướng về trang wrapper sau khi đăng xuất
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(builder: (context) => wrapper()),
+        (Route<dynamic> route) => false,
+      );
+      // Hiển thị thông báo đăng xuất thành công
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Đăng xuất thành công')),
+      );
+    } catch (e) {
+      // Xử lý lỗi nếu đăng xuất thất bại
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Lỗi đăng xuất: $e')),
+      );
+    }
   }
 
-  // Hàm để thay đổi nội dung body dựa trên section được chọn
   Widget _buildBody() {
     switch (currentPage) {
       case DrawerSections.productList:
@@ -59,7 +72,16 @@ class _HomePageState extends State<HomePage> {
           child: Center(child: Text("Settings Page")),
         );
       case DrawerSections.exit:
-        return signout();
+        return FutureBuilder(
+          future: _signOut(context),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            }
+            // Khi hoàn thành, điều hướng đã được xử lý trong _signOut
+            return Container();
+          },
+        );
     }
   }
 
@@ -70,8 +92,6 @@ class _HomePageState extends State<HomePage> {
         onSectionSelected: (section) {
           setState(() {
             currentPage = section;
-
-            // Cập nhật tiêu đề tương ứng
             switch (section) {
               case DrawerSections.productList:
                 title = "Product List";
@@ -90,19 +110,21 @@ class _HomePageState extends State<HomePage> {
                 break;
             }
           });
-
-          Navigator.pop(context); // Đóng drawer
+          Navigator.pop(context);
         },
       ),
       appBar: AppBar(
         backgroundColor: Colors.white,
-        title: Text(title, style: TextStyle(
-          color: Colors.lightBlueAccent,
-          fontWeight: FontWeight.bold,
-        ),),
+        title: Text(
+          title,
+          style: TextStyle(
+            color: Colors.lightBlueAccent,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         centerTitle: true,
       ),
-      body: _buildBody(), // Hiển thị nội dung dựa trên section
+      body: _buildBody(),
     );
   }
 }

@@ -17,7 +17,7 @@ class Navbar extends StatelessWidget {
             currentAccountPicture: CircleAvatar(
               child: ClipOval(
                 child: Image.network(
-                  "https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/474746290_1304799510770681_7448314800583217492_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_eui2=AeGLgcuM8utZOm_Oau8fwJC1fu6VbngVBzF-7pVueBUHMWHaT-yuuSFN9HKLdObuGedcldnXWlSvqxL1gHz7YU0p&_nc_ohc=UXPDs74O58wQ7kNvgHg_Oyl&_nc_oc=AdlFq56S3Q4-zBwnAQndgS6Ftwpm33eeoIAe_udi7PJmbln2qShimcyPqxc4moc55l11OyWCNb2xDUS-dNmQayRq&_nc_zt=23&_nc_ht=scontent.fdad1-3.fna&_nc_gid=I_xvFck-aeNkwkKh0VMK1w&oh=00_AYEwStMW1cBBTuaQ0dfi_YDx7Z1lR9xjrclkHCQatvfszw&oe=67E0B017",
+                  "https://scontent.fdad1-3.fna.fbcdn.net/v/t39.30808-6/474746290_1304799510770681_7448314800583217492_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=HtG7EGhfNs0Q7kNvgFYh5h1&_nc_oc=AdnDPLtMJUgTTVW6MffRZdg9-lgaLXOBt3tKXdEitSLBQ2LEra54QkXoc2xyg5l7Yd2MKZcRFkTSZiDddMK1M58c&_nc_zt=23&_nc_ht=scontent.fdad1-3.fna&_nc_gid=nTQMILHSwfgYEK3mcfJnfw&oh=00_AYHu7gPDjfeHsrPCbsj5PizehrR17yos0-jrW_HrI7hr8g&oe=67E7F057",
                   width: 90,
                   height: 90,
                   fit: BoxFit.cover,

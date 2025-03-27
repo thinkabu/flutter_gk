@@ -11,7 +11,7 @@ class DatabaseMethods {
   }
 // READ
   Future<Stream<QuerySnapshot>> getProductDetails() async{
-    return await FirebaseFirestore.instance.collection("Product").snapshots();
+    return FirebaseFirestore.instance.collection("Product").snapshots();
   }
 // UPDATE
   Future updateProductDetails(String idsanpham, Map<String, dynamic> updateInfoMap) async{
